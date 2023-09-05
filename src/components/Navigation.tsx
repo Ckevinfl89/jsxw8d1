@@ -1,26 +1,32 @@
-type NavigationProps = { 
-    isLoggedIn: boolean
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+
+type NavigationProps = {
+    isLoggedIn: boolean,
+    handleClick: ()=>void
 }
 
-export default function Navigation({ isLoggedIn }:NavigationProps) {
-    // console.log(isLoggedIn);
-  return (
-    <div>
-        <h5>Kekambas Blog</h5>
-        <ol>
-            <li><a href="">Home</a></li>
-            { isLoggedIn ? (
-                <>
-                <li><a href="">Create Post</a></li>
-                <li><a href="">Log Out</a></li>
-                </>
-            ) : (
-            <>
-            <li><a href="">Sign Up</a></li>
-            <li><a href="">Log In</a></li>
-            </>
-            ) }
-        </ol>
-    </div>
-  )
+export default function Navigation({ isLoggedIn, handleClick }:NavigationProps) {
+    
+    return (
+        <Navbar bg='dark' data-bs-theme='dark'>
+            <Container>
+                <Navbar.Brand href='/'>Kekambas Blog</Navbar.Brand>
+                <Nav className='me-auto'>
+                    { isLoggedIn ? (
+                        <>
+                            <Nav.Link href='/'>Create Post</Nav.Link>
+                            <Nav.Link as='button' onClick={handleClick}>Log Out</Nav.Link>
+                        </>
+                    ) : (
+                        <>
+                            <Nav.Link href='/'>Sign Up</Nav.Link>
+                            <Nav.Link as='button' onClick={handleClick}>Log In</Nav.Link>
+                        </>
+                    )}
+                </Nav>
+            </Container>
+        </Navbar>
+    )
 }
