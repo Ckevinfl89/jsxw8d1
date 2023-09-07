@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import CategoryType from '../types/category';
 import UserType from '../types/auth';
-import { login } from '../lib/apiWrapper';
+import { login, getMe } from '../lib/apiWrapper';
 
 type LoginProps = {
     isLoggedIn: boolean,
@@ -33,8 +33,10 @@ export default function Login({ isLoggedIn, logUserIn, flashMessage }: LoginProp
         if (response.error){
             flashMessage(response.error, 'danger')
         } else {
-            console.log(response.data)
-            logUserIn(user);
+            localStorage.setItem('token', response.data?.token as string);
+            localStorage.setItem('tokenExp', response.data?.tokenExpiration as string);
+            const userResponse = await getMe(response.data?.token as string)
+            logUserIn(userResponse.data!);
             navigate('/');
         }
     }
