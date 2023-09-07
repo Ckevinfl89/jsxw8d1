@@ -3,16 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import CategoryType from '../types/category';
 import UserType from '../types/auth';
 
 type LoginProps = {
     isLoggedIn: boolean,
-    logUserIn: (user:Partial<UserType>) => void,
-    flashMessage: (message:string|null, category: CategoryType|null) => void
+    logUserIn: (user:Partial<UserType>) => void
 }
 
-export default function Login({ isLoggedIn, logUserIn, flashMessage }: LoginProps) {
+export default function Login({ isLoggedIn, logUserIn }: LoginProps) {
     const navigate = useNavigate();
     
     if (isLoggedIn){
@@ -29,7 +27,6 @@ export default function Login({ isLoggedIn, logUserIn, flashMessage }: LoginProp
     const handleFormSubmit = (e: React.FormEvent):void => {
         e.preventDefault();
         logUserIn(user);
-        flashMessage(`${user.username} has logged in`, 'success');
         navigate('/');
     }
 
